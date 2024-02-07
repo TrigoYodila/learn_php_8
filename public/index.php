@@ -10,7 +10,7 @@ define('FILES_PATH', $root . 'transaction_files' . DIRECTORY_SEPARATOR);
 define('VIEWS_PATH', $root . 'views' . DIRECTORY_SEPARATOR);
 
 //import app.php file
-require APP_PATH . "App.php";
+require APP_PATH . 'App.php';
 
 //call fn defined to App.php file
 $files = getTransactionFiles(FILES_PATH);
@@ -24,4 +24,7 @@ foreach ($files as $file) {
     $transactions = array_merge($transactions, getTransactions($file));
 }
 
-print_r($transactions);
+//print_r($transactions);
+
+//import views path
+require VIEWS_PATH . 'transactions.php';

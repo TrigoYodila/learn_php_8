@@ -30,6 +30,9 @@ function getTransactions(string $fileName):array{
 
     $file = fopen($fileName, 'r');
 
+    //supprimer la première ligne
+    fgetcsv($file);
+
     $transactions = [];
 
     // lecture du fichier ligne par ligne
