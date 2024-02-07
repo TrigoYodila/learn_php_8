@@ -13,6 +13,11 @@ define('VIEWS_PATH', $root . 'views' . DIRECTORY_SEPARATOR);
 require APP_PATH . "App.php";
 
 //call fn defined to App.php file
-$files = getTransactionFiles();
+$files = getTransactionFiles(FILES_PATH);
+
+$transactions = [];
+foreach ($files as $file) {
+    $transactions = array_merge($transactions, getTransactionFiles($file));
+}
 
 var_dump($files);

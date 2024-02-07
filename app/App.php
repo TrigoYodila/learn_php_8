@@ -2,11 +2,12 @@
 
 declare(strict_types = 1);
 
-function getTransactionFiles():array{
+// obtenir les fichiers des transactions
+function getTransactionFiles(string $dirPath):array{
     $files = [];
 
     //parcours les fichiers du chemin specifié
-    foreach (scandir(FILES_PATH) as $file) {
+    foreach (scandir($dirPath) as $file) {
         
         //ne fait rien, continue si l'elt est un dossier
         if(is_dir($file)){
@@ -14,8 +15,27 @@ function getTransactionFiles():array{
         }
 
         //ajoute dans le tableau si c'est un fichier
-        $files[] = $file;
+        $files[] = $dirPath . $file;
     }
 
     return $files;
+}
+
+// lire chaque ligne de transactions et le pusher dans un tableau
+function getTransactions(string $fileName):array{
+
+    if( !file_exists($fileName)){
+        trigger_error('File "' . $fileName . '" does not exist. ', E_USER_ERROR);
+    }
+
+    $file = fopen($fileName, 'r');
+
+    $transactions = [];
+
+    // lecture du fichier ligne par ligne
+    while(($transaction = fgetcsv($file)) !== false){  //fgetcsv lit la ligne et renvoi un tableau elts separé par un separateur (, / \ etc...)
+        $transactions[] = $transaction;
+    }
+
+    return $transactions;
 }
