@@ -37,8 +37,22 @@ function getTransactions(string $fileName):array{
 
     // lecture du fichier ligne par ligne
     while(($transaction = fgetcsv($file)) !== false){  //fgetcsv lit la ligne et renvoi un tableau elts separé par un separateur (, / \ etc...)
-        $transactions[] = $transaction;
+        $transactions[] = extractTransaction($transaction);
     }
 
     return $transactions;
+}
+
+// format amount number
+function extractTransaction(array $transactionRow):array{
+    [$date,$checkNumber,$description,$amount] = $transactionRow;
+
+    $amount = (float) str_replace(['$', ','], '',$amount);
+
+    return [
+        'date' => $date,
+        'checkNumber' => $checkNumber,
+        'description' => $description,
+        'amount' => $amount
+    ];
 }
