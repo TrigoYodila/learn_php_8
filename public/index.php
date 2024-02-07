@@ -15,9 +15,13 @@ require APP_PATH . "App.php";
 //call fn defined to App.php file
 $files = getTransactionFiles(FILES_PATH);
 
+//var_dump($files);
+
+//var_dump(fopen($files[0], 'r'));
+
 $transactions = [];
 foreach ($files as $file) {
-    $transactions = array_merge($transactions, getTransactionFiles($file));
+    $transactions = array_merge($transactions, getTransactions($file));
 }
 
-var_dump($files);
+print_r($transactions);
